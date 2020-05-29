@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+<!-- Title -->
+<h1 class="mt-4">{{ article.title }}</h1>
+<!-- Author -->
+<p class="lead">
+  by
+  <a href="#">{{ article.author }}</a>
+</p>
+<hr>
+<!-- Date/Time -->
+<p>Posted on {{ article.created_on }}</p>
+<hr>
+<!-- Post Content -->
+<p class="card-text ">{{ article.content | safe }}</p>
+<hr>
+{% endblock content %}

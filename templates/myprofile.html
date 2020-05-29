@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}|My profile{% endblock %}
+{% block content %}
+<h1 class="my-4">
+    My account
+</h1>
+<hr>
+<h3>Username: {{ user.username }}</h3>
+<h3>Last login: {{ user.last_login}}</h3>
+<h3>Registration date: {{ user.date_joined}}</h3>
+<div class="col-md-4 order-md-2 mb-4">
+    <hr>
+<form class="form-signin" method="POST">
+    {% csrf_token %}
+    <h3>First name: {{ form.first_name }}</h3>
+    <h3>Last name: {{ form.last_name }}</h3>
+    <h3>Email: {{ form.email}}</h3>
+    <br>
+  <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">save changes</button>
+</form>
+</div>
+
+{% endblock %}

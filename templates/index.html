@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Blog Entries Column -->
+<h1 class="my-4">
+    {% if request.GET.q %}
+    Search
+    {% else %}
+    All articles
+    {% endif %}
+</h1>
+<!-- Blog Post -->
+{% for article in articles %}
+<div class="card mb-4">
+   <div class="card-body">
+      <h2 class="card-title">{{ article.title }}</h2>
+      <p class="card-text">{{ article.content|slice:":200" }}</p>
+      <a href="{% url 'article_detail' article.slug  %}" class="btn btn-primary">Read More →</a>
+   </div>
+   <div class="card-footer text-muted">
+      Posted on {{ article.created_on }} by
+      <a href="{% url 'author_detail' article.author %}">{{ article.author }}</a>
+   </div>
+</div>
+{% endfor %}
+<!-- Pagination -->
+{% if articles.has_other_pages %}
+<ul class="pagination justify-content-center mb-4">
+   {% if articles.has_previous %}
+   <li class="page-item"><a class="page-link" href="?page={{ articles.previous_page_number }}">&laquo;</a></li>
+   {% else %}
+   <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+   {% endif %}
+   {% for i in articles.paginator.page_range %}
+   {% if articles.number == i %}
+   <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+   {% else %}
+   <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+   {% endif %}
+   {% endfor %}
+   {% if articles.has_next %}
+   <li class="page-item"><a class="page-link" href="?page={{ articles.next_page_number }}">&raquo;</a></li>
+   {% else %}
+   <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+   {% endif %}
+</ul>
+{% endif %}
+<!-- Sidebar Widgets Column -->
+{% endblock %}

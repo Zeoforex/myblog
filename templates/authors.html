@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}|Authors{% endblock %}
+{% block content %}
+<!-- Blog Entries Column -->
+<h1 class="my-4">
+    All authors
+</h1>
+<!-- Blog Post -->
+{% for author in authors %}
+<div class="card mb-4">
+   <div class="card-body">
+      <h2 class="card-title">{{ author.username }}</h2>
+      <a href="{% url 'author_detail' username=author.username %}" class="btn btn-primary">Show info</a>
+   </div>
+</div>
+{% endfor %}
+<!-- Pagination -->
+{% if authors.has_other_pages %}
+<ul class="pagination justify-content-center mb-4">
+   {% if authors.has_previous %}
+   <li class="page-item"><a class="page-link" href="?page={{ articles.previous_page_number }}">&laquo;</a></li>
+   {% else %}
+   <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+   {% endif %}
+   {% for i in authors.paginator.page_range %}
+   {% if authors.number == i %}
+   <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+   {% else %}
+   <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+   {% endif %}
+   {% endfor %}
+   {% if authors.has_next %}
+   <li class="page-item"><a class="page-link" href="?page={{ articles.next_page_number }}">&raquo;</a></li>
+   {% else %}
+   <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+   {% endif %}
+</ul>
+{% endif %}
+<!-- Sidebar Widgets Column -->
+{% endblock %}
